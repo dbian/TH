@@ -451,7 +451,7 @@ void setIcon(bool deleteIt)
 		return;
 	}
 
-	if(firstSetIcon){
+	if(firstSetIcon){ 
 
 		//for the first time we have to use the Shell_NotifyIcon with NIM_ADD
 		//to add the icon to the tray
