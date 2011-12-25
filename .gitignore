@@ -1,0 +1,7 @@
+#this file lists a list of file or filetype 
+#that will be ignored by git
+*.o
+*.exe
+
+#vi tmp files
+*.swp
