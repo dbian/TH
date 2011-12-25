@@ -73,14 +73,18 @@ static BOOL InitWindow( HINSTANCE hInstance, int nCmdShow )
 	//注册窗口类
 	RegisterClass( &wc );
 	//创建主窗口
+        long screenw,screenh;
+        screenw=GetSystemMetrics(SM_CXSCREEN);
+        screenh=GetSystemMetrics(SM_CYSCREEN);
+        long ww=327,hh=180;
 	wnd = CreateWindowW(
 			L"tmpHacker", //窗口类名称
 			L" GPU Temperature Hacker ", //窗口标题
 			WS_OVERLAPPED|WS_CAPTION|WS_SYSMENU|WS_MINIMIZEBOX, //窗口风格，定义为普通型
-			300, //窗口位置的x坐标
-			300, //窗口位置的y坐标
-			327, //窗口的宽度
-			180, //窗口的高度
+			(screenw-ww)/2, //窗口位置的x坐标
+			(screenh-hh)/2, //窗口位置的y坐标
+			ww, //窗口的宽度
+			hh, //窗口的高度
 			NULL, //父窗口句柄
 			NULL, //菜单句柄
 			hInstance, //应用程序实例句柄
@@ -141,6 +145,8 @@ BOOL CALLBACK WinProc( HWND hWnd, UINT message, WPARAM wParam, LPARAM lParam )
 							if(HIWORD(wParam)==CBN_SELCHANGE)
 							{
 								curGpu=SendMessage(comboGpu, CB_GETCURSEL, 0, 0);
+                                                                //refresh once
+                                                                setIcon();
 								saveSettings();
 							}
 							break;
@@ -153,6 +159,8 @@ BOOL CALLBACK WinProc( HWND hWnd, UINT message, WPARAM wParam, LPARAM lParam )
 								DeleteObject(hf);
 								setFont();
 								saveSettings();
+                                                                //refresh once
+                                                                setIcon();
 							}
 							break;
 						}
@@ -172,6 +180,9 @@ BOOL CALLBACK WinProc( HWND hWnd, UINT message, WPARAM wParam, LPARAM lParam )
 							if (ChooseColor(&cc)==TRUE) 
 							{
 								colorTray = cc.rgbResult; 
+                                                                //refresh once
+                                                                setIcon();
+
 							}
 							saveSettings();
 
@@ -325,7 +336,9 @@ void onTray(WPARAM wParam,LPARAM lParam)
 					ShowWindow(wnd,SW_HIDE);
 				else
 					ShowWindow(wnd,SW_NORMAL);
-				BringWindowToTop(wnd);
+				//BringWindowToTop(wnd);
+                                //this API can make the window be seen
+                                SetForegroundWindow(wnd);
 				break;
 			}
 		case WM_RBUTTONDOWN:
@@ -333,6 +346,8 @@ void onTray(WPARAM wParam,LPARAM lParam)
 				HMENU popmenu=GetSubMenu(menu,0);
 				POINT point;
 				GetCursorPos(&point);
+                                //this can makesure menu get focus right now
+                                SetForegroundWindow(wnd);
 				TrackPopupMenu (popmenu, TPM_RIGHTBUTTON, point.x, point.y, 0, wnd, NULL) ;
 				break;
 
