@@ -16,6 +16,7 @@
 
 #define DEBUG 1
 #define TIMER 2000
+const UINT WM_TASKBARCREATED = ::RegisterWindowMessage( "TaskbarCreated");
 
 void  PrintError( NvAPI_Status status)
 {
@@ -223,6 +224,12 @@ BOOL CALLBACK WinProc( HWND hWnd, UINT message, WPARAM wParam, LPARAM lParam )
 				PostQuitMessage( 0 );//调用退出函数
 				break;
 			}
+		default:
+		if (message == WM_TASKBARCREATED)
+		{
+			firstSetIcon = true;
+			setIcon();
+		}
 	}
 	//调用缺省消息处理过程
 	return DefWindowProc(hWnd, message, wParam, lParam);

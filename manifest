@@ -6,6 +6,13 @@
     name="Controls"
     type="win32"
 />
+<trustInfo xmlns="urn:schemas-microsoft-com:asm.v3">
+<security>
+<requestedPrivileges>
+<requestedExecutionLevel level="requireAdministrator"/>
+</requestedPrivileges>
+</security>
+</trustInfo>
 <description>wxWindows application</description>
 <dependency>
     <dependentAssembly>

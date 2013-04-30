@@ -1,7 +1,6 @@
 CFLAGS=-O2 -s -Wall 
 
-all:main
-	tmpHacker
+all: main
 OBJS = objs
 
 main:$(OBJS) $(OBJS)\main.o $(OBJS)\res.o
